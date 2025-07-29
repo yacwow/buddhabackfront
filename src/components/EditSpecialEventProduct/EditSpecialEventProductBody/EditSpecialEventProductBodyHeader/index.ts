@@ -1,0 +1,2 @@
+import EditSpecialEventProductBodyHeader from './EditSpecialEventProductBodyHeader';
+export default EditSpecialEventProductBodyHeader;

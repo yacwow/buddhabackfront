@@ -1,0 +1,2 @@
+import ShowCategoryInHomePageBottomComp from './ShowCategoryInHomePageBottomComp';
+export default ShowCategoryInHomePageBottomComp;

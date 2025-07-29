@@ -1,0 +1,37 @@
+.editable-cell {
+  position: relative;
+}
+
+.editable-cell-value-wrap {
+  /* padding: 5px 12px; */
+  cursor: pointer;
+}
+
+.editable-row:hover .editable-cell-value-wrap {
+  padding: 4px 11px;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+}
+.ant-table-cell {
+  border: 1px solid red;
+  box-sizing: border-box;
+}
+.ant-table-content {
+  border-bottom: 1px solid red;
+}
+
+.product-size-table {
+  border-collapse: collapse;
+}
+
+.product-size-table th,
+.product-size-table tr,
+.product-size-table td {
+  border: 1px solid black;
+  min-height: 20px;
+  min-width: 100px;
+}
+.product-size-table input {
+  min-height: 20px;
+  min-width: 500px;
+}

@@ -1,0 +1,8 @@
+.productDescription .ant-select-selection-item-selected {
+  background-color: #f0f0f0; /* 设置选中的选项的背景颜色 */
+  color: #333; /* 设置选中的选项的文字颜色 */
+}
+
+.w-e-text-container [data-slate-editor] p {
+  margin: 0 !important;
+}

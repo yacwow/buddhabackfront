@@ -1,0 +1,25 @@
+.display {
+    width: 500px;
+    margin-left: 200;
+    margin-top: 50;
+
+    div {
+        height: 40px;
+        border: 1px solid black;
+
+        span {
+            display: inline-block;
+            height: 40px;
+            line-height: 40px;
+            padding-left: 20px;
+        }
+    }
+}
+
+:global {
+    .ant-select-tree-node-selected .ant-select-tree-title {
+        background-color: aqua;
+        font-weight: 800;
+        font-size: 18px;
+    }
+}

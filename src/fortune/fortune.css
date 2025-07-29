@@ -1,0 +1,72 @@
+.fortuneHeader {
+  font-size: 17px;
+  .fortuneTime {
+    font-weight: 500;
+  }
+  .flex {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    .imgContainer{
+      img{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.fortuneGuide {
+  border: 1px solid black;
+  display: table;
+  font-size: 17px;
+  padding: 10px;
+  .title {
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  ul {
+    list-style: none;
+    margin: 0 !important;
+    li {
+      /* ::before {
+        counter-increment: section;
+        content: counter(section) '. ';
+      } */
+      margin: 5px 0;
+      a {
+        border-bottom: 1px solid #918a8aec;
+        text-decoration: none;
+        color: #000;
+      }
+    }
+  }
+}
+
+.content-container {
+  font-size: 18px;
+  a {
+    border-bottom: 1px solid #918a8aec;
+    text-decoration: none;
+    color: #000;
+  }
+  margin-bottom: 40px;
+}
+.content-container::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.content-container img {
+  float: left; /* 让图片浮动到左侧 */
+  margin-right: 15px; /* 图片与文字之间的间距 */
+  width: 160px; /* 图片固定大小 */
+  height: auto;
+}
+
+.text-content {
+  overflow: hidden; /* 让父容器包含浮动元素，防止布局塌陷 */
+}

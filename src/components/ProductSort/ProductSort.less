@@ -1,0 +1,43 @@
+.modal {
+    p {
+        padding: 0;
+        margin: 0;
+    }
+
+    input {
+        width: 40px;
+    }
+}
+
+.showProduct {
+    position: relative;
+    margin-bottom: 5px;
+    // margin-left: 5px;
+    margin-right: 7px;
+    border: 1px solid gray;
+    height: 20px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.close {
+    display: inline-block;
+    position: relative;
+    width: 14px;
+    height: 14px;
+    vertical-align: center;
+    align-items: center;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 50%;
+    line-height: 20px;
+
+    &::after {
+        content: "x";
+        position: absolute;
+        top: -5px;
+        left: 3px;
+    }
+}

@@ -1,0 +1,162 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
+</head>
+
+<body th:inline="text">
+    <span style="display: none !important; font-size:0; line-height:0" th:text="${summary}"></span>
+    <table cellSpacing="0" cellPadding="0" align="center" border="0" style="width:100%;max-width:600px;">
+        <tr>
+            <td align="center">
+                <a href="https://www.karmaandchi.com/" target="_blank"><img src="https://www.karmaandchi.com/mylogo.png"
+                        alt="logo" width="40%" /></a>
+            </td>
+        </tr>
+        <tr align="center">
+            <td>
+                <p>
+                    <a href="https://www.karmaandchi.com/" style="color:red;text-decoration:none;font-size:14px;"
+                        target="_blank">Can't view the email?
+                        Click here!</a>
+                </p>
+            </td>
+        </tr>
+    </table>
+
+    <table cellSpacing="0" cellPadding="0" align="center" border="0"
+        style="width:100%;max-width:600px;font-size:13px;line-height:29px;background:#e3cdb6;">
+        <tr align="center">
+            <td style="border-right:3px solid #fff;">
+                <a href="https://www.karmaandchi.com/category/Attract%20Wealth-c2-131"
+                    style="color:#000;text-decoration:none;" target="_blank">Attract Wealth</a>
+            </td>
+            <td style="border-right:3px solid #fff;">
+                <a href="https://www.karmaandchi.com/category/Attract%20Luck-c2-133"
+                    style="color:#000;text-decoration:none;" target="_blank">Attract Luck</a>
+            </td>
+            <td style="border-right:3px solid #fff;">
+                <a href="https://www.karmaandchi.com/category/Attract%20Health-c2-134"
+                    style="color:#000;text-decoration:none;" target="_blank">Attract Health</a>
+            </td>
+            <td style="border-right:3px solid #fff;">
+                <a href="https://www.karmaandchi.com/category/Attract%20Love-c2-135"
+                    style="color:#000;text-decoration:none;" target="_blank">Attract Love</a>
+            </td>
+            <td>
+                <a href="https://www.karmaandchi.com/category/Agate-c2-168" style="color:#000;text-decoration:none;"
+                    target="_blank">Agate Crystal</a>
+            </td>
+        </tr>
+    </table>
+
+    <table cellSpacing="0" cellPadding="0" align="center" border="0"
+        style="width:100%;max-width:600px;margin-top:10px;">
+        <tr>
+            <td>
+                <a href="https://www.karmaandchi.com/" target="_blank">
+                    <img src="https://www.sweeshop.com/storage/app/media/youjian-banner/4ae38c7581d9c2939514e8bd915c7c38.jpg"
+                        alt="banner" width="100%" />
+                </a>
+            </td>
+        </tr>
+    </table>
+
+    <table cellSpacing="0" cellPadding="0" align="center" border="0"
+        style="width:100%;max-width:600px;margin-top:10px;">
+        <tr>
+            <td>
+                <p style="font-size:15px;color:#333;line-height:25px;padding-left:15px;">
+                    Hello! [[${firstname}]],<br />
+                    Thank you for shopping with 【Karma&Chi】. We truly appreciate your support!<br />
+                    Enjoy free shipping on all orders over $99 across the entire shop!<br />
+                </p>
+            </td>
+        </tr>
+    </table>
+    <table cellSpacing="0" cellPadding="0" align="center" border="0" style="width:100%;max-width:600px;">
+        <tr>
+            <td>
+                <a href="https://www.karmaandchi.com"><img src="" alt="" width="100%" /></a>
+            </td>
+        </tr>
+    </table>
+    <table cellSpacing="0" cellPadding="0" align="center" border="0" style="width:100%;max-width:600px;">
+        <tr>
+            <td>
+                <a href="https://www.karmaandchi.com"><img src="https://www.karmaandchi.com/emailImg/fgx1.jpg" alt=""
+                        width="100%" /></a>
+            </td>
+        </tr>
+    </table>
+    <table cellSpacing="0" cellPadding="0" align="center" border="0" style="width:100%;max-width:600px;">
+        <tr>
+            <td align="center">
+                <p style="background:#e3cdb6;max-width:260px;line-height:30px;color:#333;">Recommended Products for
+                    Fashion Enthusiasts >></p>
+            </td>
+        </tr>
+    </table>
+    <table cellSpacing="0" cellPadding="0" align="center" border="0" style="width:100%;max-width:600px;margin-top:8px;">
+        <tr align="center">
+            <th:block th:each="product : ${products}">
+                <td class="product" style="width: 47%;display: inline-block;padding: 1%;">
+                    <a th:href="${product.url}"><img th:src="${product.img}" alt="${product.name}" width="100%" /></a>
+                    <p class="p-rice" style="color:red;font-size:13px;">
+                        <span class="span-rice"
+                            style="text-decoration:line-through;display:block;line-height:35px;color:black;">
+                            Reference Price:$ [[${product.list_price}]]
+                        </span>
+                        <span>Sale Price:$ [[${product.price}]]</span>
+                    </p>
+                </td>
+            </th:block>
+        </tr>
+    </table>
+    
+    <table cellSpacing="0" cellPadding="0" align="center" border="0" style="width:100%;max-width:600px;">
+        <tr>
+            <td>
+                <img src="https://www.karmaandchi.com/emailImg/fgx1.jpg" alt="" width="100%" />
+            </td>
+        </tr>
+    </table>
+    
+    <table cellSpacing="0" cellPadding="0" align="center" border="0"
+        style="width:100%;max-width:600px;font-size:16px;font-weight: 500; line-height:29px;background:#e3cdb6;">
+        <tr align="center">
+            <td style="border-right:3px solid #fff;">
+                <a href="https://www.karmaandchi.com/bestSeller" style="color:#000;text-decoration:none;"
+                    target="_blank">Best Seller</a>
+            </td>
+            <td style="border-right:3px solid #fff;">
+                <a href="https://www.karmaandchi.com/saveUpTo70" style="color:#000;text-decoration:none;"
+                    target="_blank">Discount</a>
+            </td>
+            <td style="border-right:3px solid #fff;">
+                <a href="https://www.karmaandchi.com/trending" style="color:#000;text-decoration:none;"
+                    target="_blank">Trending</a>
+            </td>
+        </tr>
+    </table>
+
+    <table align="center" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;">
+        <tr>
+            <td>
+                <p style="font-size:14px;color:#000;line-height:25px;">
+                    If you have any questions or concerns, please do not hesitate to contact our customer service
+                    team.<br />
+                    You can reach us at: <a href="mailto:sale@karmaandchi.com">sale@karmaandchi.com</a><br />
+                    Our business hours are Monday to Friday:<br />
+                    09:30 AM - 12:00 PM and 02:00 PM - 06:00 PM (local time)<br />
+                    Thank you for your continued support!<br /></p>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+.contentContainer {
+  // p {
+  //     margin: 0 !important;
+  // }
+}
+
+.showMask {
+  --start-year-angle: 0deg; /* 默认值 */
+
+  --start-month-angle: 0deg; /* 默认值 */
+
+  position: relative;
+  /* z-index: 999; */
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: #eee;
+  //   background-image: url('/businessIcon/fortune.jpg');
+  background-size: cover; /* 完全覆盖容器 */
+  background-position: center; /* 图片居中 */
+  background-repeat: no-repeat; /* 不重复 */
+}
+
+.showMask::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+
+  background: conic-gradient(
+    from var(--start-year-angle) at center,
+    rgba(223, 206, 88, 0.8) 0deg 30deg,
+    transparent 30deg
+  );
+
+  /* 百分比基于父容器400px换算：100px=25%, 150px=37.5% */
+  mask: radial-gradient(
+    circle,
+    transparent 34%,
+    /* 100px=25% */ rgba(223, 206, 88, 0.8) 37% 69%,
+    /* 100-150px=25%-37.5% */ transparent 69%
+  );
+}
+.showMask::after {
+  /* 第二个扇形：30-60度，75-100px */
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%; /* 100px/400px → 25%半径×2=50% */
+  height: 50%;
+  transform: translate(-50%, -50%);
+  background: conic-gradient(
+    from var(--start-month-angle) at center,
+    /* 起始角度调整为30度 */ rgba(60, 0, 0, 0.8) 0deg 30deg,
+    /* 0-30deg相对起始点 */ transparent 30deg
+  );
+  mask: radial-gradient(
+    circle,
+    transparent 50%,
+    /* 75px/200px=37.5% (200px是当前50%的绝对值) */ rgba(60, 0, 0, 0.8) 50% 71%,
+    /* 75-100px */ transparent 71%
+  );
+}

@@ -1,0 +1,9 @@
+.mainShowTable .ant-table-thead {
+  position: sticky;
+  top: 100px;
+  z-index: 2;
+}
+
+.mainShowTable {
+  min-width: 1544px;
+}

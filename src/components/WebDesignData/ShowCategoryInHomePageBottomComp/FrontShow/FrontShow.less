@@ -1,0 +1,96 @@
+.wrap {
+    background-color: #fff;
+    font-family: PingFang SC;
+    list-style: none;
+    max-width: 750px;
+
+    .categoryLi {
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+
+    .levelOne {
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 2.5rem;
+
+        .levelOneName {
+            font-size: 16px;
+            color: #202020;
+            font-family: PingFang SC;
+            font-weight: 700;
+            height: 70px;
+            line-height: 70px;
+
+            .thumb {
+                width: 50px;
+                height: 50px;
+                margin-right: .2rem;
+                vertical-align: top;
+                display: inline-block;
+                margin-top: 10px;
+
+                div {
+                    height: 50px;
+                }
+
+                img {
+                    border-radius: 50%;
+                    height: 100%;
+                    width: 100%;
+                    vertical-align: baseline;
+                }
+            }
+        }
+
+        .close {
+            transition: all .2s ease-in-out;
+            // transform: rotate(180deg);
+        }
+
+    }
+
+
+    ul {
+        list-style: none;
+        display: flex;
+        transition: all 0.5s ease 0s;
+        flex-wrap: wrap;
+        background-color: #f8f8f8;
+        // display: none;
+        padding: 0;
+
+        li {
+            width: 50%;
+            height: 45px;
+            line-height: 45px;
+            border-bottom: 1px solid rgba(62, 62, 62, .2);
+            display: list-item;
+            text-align: -webkit-match-parent;
+
+            a {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 20px;
+                color: #000;
+                text-decoration: none;
+
+                span {
+                    font-size: 14px;
+                    font-family: PingFang SC;
+                    font-weight: bold;
+                    color: #5F5F5F;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+            }
+
+        }
+    }
+
+
+}

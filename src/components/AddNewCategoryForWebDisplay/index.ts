@@ -1,0 +1,2 @@
+import AddNewCategoryForWebDisplay from './AddNewCategoryForWebDisplay'
+export default AddNewCategoryForWebDisplay;

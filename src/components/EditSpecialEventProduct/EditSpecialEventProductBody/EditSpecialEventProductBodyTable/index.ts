@@ -1,0 +1,2 @@
+import EditSpecialEventProductBodyTable from './EditSpecialEventProductBodyTable';
+export default EditSpecialEventProductBodyTable;

@@ -1,0 +1,196 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
+</head>
+
+<body th:inline="text">
+    <span style="display: none !important; font-size:0; line-height:0" th:text="${summary}"></span>
+    <table cellSpacing="0" cellPadding="0" align="center" border="0" style="width:100%;max-width:600px;">
+        <tr>
+            <td align="center">
+                <a href="https://www.karmaandchi.com/" target="_blank"><img src="https://www.karmaandchi.com/mylogo.png"
+                        alt="logo" width="40%" /></a>
+            </td>
+        </tr>
+        <tr align="center">
+            <td>
+                <p>
+                    <a href="https://www.karmaandchi.com/" style="color:red;text-decoration:none;font-size:14px;"
+                        target="_blank">Can't view the email?
+                        Click here!</a>
+                </p>
+            </td>
+        </tr>
+    </table>
+
+    <table cellSpacing="0" cellPadding="0" align="center" border="0"
+        style="width:100%;max-width:600px;font-size:13px;line-height:29px;background:#e3cdb6;">
+        <tr align="center">
+            <td style="border-right:3px solid #fff;">
+                <a href="https://www.karmaandchi.com/category/Attract%20Wealth-c2-131"
+                    style="color:#000;text-decoration:none;" target="_blank">Attract Wealth</a>
+            </td>
+            <td style="border-right:3px solid #fff;">
+                <a href="https://www.karmaandchi.com/category/Attract%20Luck-c2-133"
+                    style="color:#000;text-decoration:none;" target="_blank">Attract Luck</a>
+            </td>
+            <td style="border-right:3px solid #fff;">
+                <a href="https://www.karmaandchi.com/category/Attract%20Health-c2-134"
+                    style="color:#000;text-decoration:none;" target="_blank">Attract Health</a>
+            </td>
+            <td style="border-right:3px solid #fff;">
+                <a href="https://www.karmaandchi.com/category/Attract%20Love-c2-135"
+                    style="color:#000;text-decoration:none;" target="_blank">Attract Love</a>
+            </td>
+            <td>
+                <a href="https://www.karmaandchi.com/category/Agate-c2-168" style="color:#000;text-decoration:none;"
+                    target="_blank">Agate Crystal</a>
+            </td>
+        </tr>
+    </table>
+    <table cellSpacing="0" cellPadding="0" align="center" border="0"
+        style="width:100%;max-width:600px;margin-top:10px;">
+        <tr>
+            <td>
+                <a href="https://www.karmaandchi.com/"><img
+                        src="https://www.sweeshop.com/storage/app/media/youjian-banner/4ae38c7581d9c2939514e8bd915c7c38.jpg"
+                        alt="banner" width="100%" /></a>
+            </td>
+        </tr>
+    </table>
+    <table cellSpacing="0" cellPadding="0" align="center" border="0" style="width:100%;max-width:600px;">
+        <tr>
+            <td align="left" style="padding:2%;">
+                <p style="font-size:14px;color:#333;line-height:25px;">
+                    Hello! [[${firstName}]], <br />
+                    We appreciate your continued support. <br />
+                    Thank you very much for using 【Karma & Chi】. <br /><br />
+                    Our shop requires advance payment, and your order is still in an unpaid status! <br />
+                    Once we confirm your payment, we will begin preparing your shipment immediately. <br />
+                    We apologize for any inconvenience this may cause during your busy schedule, <br />
+                    but we would greatly appreciate it if you could check and let us know the number of points you can
+                    earn.
+                </p>
+            </td>
+        </tr>
+    </table>
+    <table border="0" align="center" cellpadding="0" cellspacing="0"
+        style="border-spacing:0;border-collapse:collapse;width:100%;max-width:600px;margin-top:20px;">
+        <tr th:each="product : ${products}">
+            <td rowspan="3" style="padding-left:12px;">
+                <a th:href="${product.url}"><img th:src="${product.thumb}" style="height:100px;width:100px;"></a>
+            </td>
+            <td colspan="2" style="padding:10px;border-bottom:1px dashed #666666;">
+                [[${product.name}]]
+            </td>
+        </tr>
+        <tr th:each="product : ${products}">
+            <td style="padding:10px;">
+                <span style="font-size:12px">
+                    <span th:each="option : ${product.options}">
+                        [[${option.name}}]: [[${option.value}}]<br>
+                    </span>
+                </span>
+            </td>
+            <td>
+                <span style="font-size:12px">Unit Price: [[${product.price}]]<br>
+                    Quantity: [[${product.qty}]]
+                </span>
+            </td>
+        </tr>
+        <tr th:each="product : ${products}">
+            <td></td>
+            <td style="font-size:12px">Subtotal: [[${product.priceTotal}]]</td>
+        </tr>
+    </table>
+
+
+
+
+
+    <table align="center" cellpadding="0" cellspacing="0"
+        style="width:100%;max-width:600px;margin-top:15px;border-collapse:collapse;padding:5px; border-right:1px solid #ddd;border-bottom:1px solid #ddd;">
+        <tr style="height:30px;">
+            <td align="center"
+                style="background:#B89578;border-left:1px solid #ddd;border-top:1px solid #ddd;line-height:30px;color:#fff;">
+                Discount Amount</td>
+            <td align="center" style="border-left:1px solid #ddd;border-top:1px solid #ddd;line-height:30px;">
+                [[${discountAmount}]]</td>
+            <td align="center"
+                style="background:#B89578;border-left:1px solid #ddd;border-top:1px solid #ddd;line-height:30px;color:#fff;">
+                Delivery Method</td>
+            <td align="center" style="border-left:1px solid #ddd;border-top:1px solid #ddd;line-height:30px;">
+                [[${deliveryMethod}]]</td>
+        </tr>
+        <tr style="height:30px;">
+            <td align="center"
+                style="background:#B89578;border-left:1px solid #ddd;border-top:1px solid #ddd;line-height:30px;color:#fff;">
+                Shipping Fee</td>
+            <td align="center" style="border-left:1px solid #ddd;border-top:1px solid #ddd;line-height:30px;">
+                [[${deliveryCost}]]</td>
+            <td align="center"
+                style="background:#B89578;border-left:1px solid #ddd;border-top:1px solid #ddd;line-height:30px;color:#fff;">
+                Total Amount</td>
+            <td align="center" style="border-left:1px solid #ddd;border-top:1px solid #ddd;line-height:30px;">
+                [[${totalPrice}]]</td>
+        </tr>
+    </table>
+    <table cellSpacing="0" cellPadding="0" align="center" border="0" style="width:100%;max-width:600px;">
+        <tr>
+            <td align="center">
+                <p style="background:#B89578;max-width:150px;border-radius:10px;line-height:30px;">
+                    <a th:href="${payUrl}" style="text-decoration:none;color:#fff;">Pay Now</a>
+                </p>
+            </td>
+        </tr>
+    </table>
+    <table align="center" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;">
+        <tr>
+            <td align="left" style="padding:2%;">
+                <p style="font-size:14px;color:#000;line-height:25px;">
+                    Order Number: [[${invoiceNumber}]]<br />
+                    <!-- Complete your payment and earn points: <span style="color:#B52929;">[[${score}]] </span><br />
+                    Accumulated points can be used for your next purchase. <br /> -->
+                    Check your order history on the My Account page and make your payment now!
+                </p>
+                <p style="font-size:14px;color:#000;line-height:25px;border-top:1px dashed #000;">
+                    Please make sure to complete your payment within the valid period. <br />
+                    Due to limited stock, items may be sold out when you browse the site. Thank you for your
+                    understanding. <br />
+                    As we ship products in the order of payment received, we kindly ask you to make your payment as soon
+                    as possible.
+                </p>
+            </td>
+        </tr>
+    </table>
+
+    <table cellSpacing="0" cellPadding="0" align="center" border="0" style="width:100%;max-width:600px;">
+        <tr>
+            <td>
+                <a href="https://www.karmaandchi.com"><img src="https://www.karmaandchi.com/emailImg/fgx1.jpg" alt=""
+                        width="100%" /></a>
+            </td>
+        </tr>
+    </table>
+
+    <table align="center" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;">
+        <tr>
+            <td>
+                <p style="font-size:14px;color:#000;line-height:25px;">
+                    If you have any questions or concerns, please do not hesitate to contact our customer service
+                    team.<br />
+                    You can reach us at: <a href="mailto:sale@karmaandchi.com">sale@karmaandchi.com</a><br />
+                    Our business hours are Monday to Friday:<br />
+                    09:30 AM - 12:00 PM and 02:00 PM - 06:00 PM (local time)<br />
+                    Thank you for your continued support!<br /></p>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+*{
+    padding:0;
+    border:0;
+    font-size: 0;
+    min-width: 1000px;
+    overflow-y: scroll;
+    overflow-x: hidden; 
+}
+
+body{
+    overflow-y: scroll;
+    overflow-x: hidden; 
+}
+
+#root{
+    overflow-y: scroll;
+    overflow-x: hidden; 
+}
+
+ul{
+    margin:0;
+    list-style: none;
+    padding:0;
+
+}
+div{
+    padding: 0;
+    margin:0;
+}
+h2{
+    padding:0;
+    margin:0;
+}
+/* ::global
+.ant-layout-sider-dark {
+    flex: 0 0 250px !important;
+    /* max-width: 250px !important;
+    min-width: 250px !important; */
+    width: 100px !important;
+  } */
