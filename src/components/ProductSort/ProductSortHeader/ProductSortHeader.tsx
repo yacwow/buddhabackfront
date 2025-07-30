@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import styles from './ProductSortHeader.less';
+// import styles from './ProductSortHeader.less';
 import {
   TreeSelect,
   Button,
@@ -29,9 +29,9 @@ const App: React.FC<Props> = (props) => {
     handleAllSelect,
     handleReverseSelect,
     handleHeaderSubmit,
-    getQueryCategory,
+    // getQueryCategory,
     refreshBodyData,
-    current,
+    // current,
     handleDelete,
   } = props;
 
@@ -47,7 +47,7 @@ const App: React.FC<Props> = (props) => {
     day2,
     setDay2,
     setSalesInfo,
-    selectedData,
+    // selectedData,
     setSelectedData,
   } = useModel('productSortData222');
 
@@ -63,7 +63,7 @@ const App: React.FC<Props> = (props) => {
   //下拉框选择事件
   const handleSelect = (value: any) => {
     setSelectShowedValue(value);
-    history.push(`/backend/productSort/categoryType/${value}`);
+    history.push(`/backend/productSort/categoryType${value}`);
     if (canSendDate) {
       request('/admin/secure/getCategoryProductSaleInfo', {
         params: {
@@ -153,8 +153,9 @@ const App: React.FC<Props> = (props) => {
     // refreshBodyData(1);
     let path = location.pathname;
     let arr = path.split('/');
-    if (arr.length >= 5) {
-      const decodedString = decodeURIComponent(arr[4]);
+    console.log(arr);
+    if (arr.length >= 6) {
+      const decodedString = decodeURIComponent(arr[5]);
       setSelectShowedValue(decodedString);
       request('/admin/secure/getCategoryProductForSort', {
         params: {
@@ -205,7 +206,29 @@ const App: React.FC<Props> = (props) => {
       //为了获取分类下拉列表，同时懒得在做一个请求了
       request('/admin/secure/getHomePageCategoryInfo').then((data) => {
         if (data.result) {
-          setTreeDataArr(data.data.categoryDetail);
+          let tempTreeDataArr = [];
+          tempTreeDataArr.push(...data.data.categoryDetail);
+          tempTreeDataArr.push({
+            title: "Best Seller",
+            value: "/bestSeller?page=1",
+            key: "/bestSeller?page=1",
+          });
+          tempTreeDataArr.push({
+            title: "Discount-70%",
+            value: "/saveUpTo70?page=1",
+            key: "/saveUpTo70?page=1",
+          });
+          tempTreeDataArr.push({
+            title: "Trending Now",
+            value: "/trending?page=1",
+            key: "/trending?page=1",
+          });
+          tempTreeDataArr.push({
+            title: "自定义",
+            value: "",
+            key: "自定义",
+          });
+          setTreeDataArr(tempTreeDataArr);
           setCategorySpecialEventSuccessFileList(data.data.categoryInfo);
         }
       });

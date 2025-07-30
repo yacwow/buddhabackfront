@@ -72,11 +72,12 @@ const App: React.FC = () => {
     let path = location.pathname;
     let arr = path.split('/');
     console.log(arr);
-    if (arr.length === 5) {
+    console.log(arr.length >= 6)
+    if (arr.length >= 6) {
       request('/admin/secure/getCategoryProductForSort', {
         params: {
           page,
-          categoryInfo: arr[4],
+          categoryInfo: arr[5],
         },
       }).then((data) => {
         console.log(data);
@@ -186,8 +187,8 @@ const App: React.FC = () => {
     console.log(insertTarget);
     let path = location.pathname;
     let arr = path.split('/');
-    if (arr.length >= 5) {
-      const decodedString = decodeURIComponent(arr[4]);
+    if (arr.length >= 6) {
+      const decodedString = decodeURIComponent(arr[5]);
       // 在服务器上排序，比较快
       request('/admin/secure/updateTheBundleCategory', {
         params: {
@@ -285,8 +286,9 @@ const App: React.FC = () => {
   const handleSubmit = () => {
     let path = location.pathname;
     let arr = path.split('/');
-    if (arr.length >= 5) {
-      const decodedString = decodeURIComponent(arr[4]);
+    console.log(arr)
+    if (arr.length >= 6) {
+      const decodedString = decodeURIComponent(arr[5]);
 
       // 把tabledate给搞一下，只需要productid和rank
       let list = [];
@@ -306,6 +308,8 @@ const App: React.FC = () => {
       }).then((data) => {
         if (data.result) {
           message.info({ content: '修改成功' }, 4);
+        } else {
+          message.error({ content: data.message }, 3);
         }
       });
     } else {
@@ -326,8 +330,8 @@ const App: React.FC = () => {
     console.log(productListData);
     let path = location.pathname;
     let arr = path.split('/');
-    if (arr.length >= 5) {
-      const decodedString = decodeURIComponent(arr[4]);
+    if (arr.length >= 6) {
+      const decodedString = decodeURIComponent(arr[5]);
       // 在服务器上排序，比较快
       request('/admin/secure/updateTheBundleCategoryToLast', {
         params: {
@@ -356,7 +360,7 @@ const App: React.FC = () => {
         },
       }).then((data) => {
         if (data.result) {
-          message.info({ content: '成功清除缓存' }, 4);
+          message.info({ content: '成功排序' }, 4);
           setIsCacheModalOpen(false);
           window.location.reload();
         }
@@ -409,7 +413,7 @@ const App: React.FC = () => {
             })}
           </div>
           <div>
-            {productListData.map((item: number, ) => {
+            {productListData.map((item: number,) => {
               return item + ',';
             })}
           </div>
@@ -593,7 +597,7 @@ const App: React.FC = () => {
       <p style={{ color: '#f40' }}>
         如果该类新增过产品，可以先用
         <strong style={{ fontWeight: 800, fontSize: 20 }}> 一次 </strong>
-        清除缓存，避免后续排序出错
+        预排序，避免后续排序出错
         <br />
         除了跨页批量插入之外，其他的插入均需要按保存来修改顺序
       </p>
@@ -645,7 +649,7 @@ const App: React.FC = () => {
             setIsCacheModalOpen(true);
           }}
         >
-          清除缓存
+          预排序
         </Button>
         <Button onClick={handleDelete}>删除</Button>
       </div>

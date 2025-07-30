@@ -120,11 +120,16 @@ const App: React.FC = () => {
   const [data, setData] = useState<DataType[]>([]);
 
   useEffect(() => {
+    console.log(treeDataArr)
     const tempData: any[] = [];
 
     let key = 0;
     for (let i = 0; i < treeDataArr.length; i++) {
+
       let value = treeDataArr[i]['value'];
+      if (value === "" || value === "/bestSeller?page=1" || value === "/saveUpTo70?page=1" || value === "/trending?page=1") {
+        continue;
+      }
       let title = treeDataArr[i]['title'];
       let imgSrc = treeDataArr[i]['imgSrc'];
       let categoryId = treeDataArr[i]['categoryId'];
@@ -164,7 +169,7 @@ const App: React.FC = () => {
                 ? formatTimeFromStr(children[j]['updateTime'])
                 : '',
             author: children[j]['author'],
-            categoryHref: `/backend/productSort/categoryType/${children[j]['value']}`,
+            categoryHref: `/backend/productSort/categoryType${children[j]['value']}`,
           });
           key++;
           let insideChildren = children[j]['children'];

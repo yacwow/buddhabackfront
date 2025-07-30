@@ -1,4 +1,4 @@
-import { history, useModel } from '@umijs/max';
+import { useModel } from '@umijs/max';
 import React, { useState } from 'react';
 import styles from '@/components/ProductSort/ProductSort.less';
 import {
@@ -42,8 +42,7 @@ const App: React.FC = () => {
   const {
     tableData,
     setTableData,
-    day1,
-    day2,
+
     dataSize,
     setSelectedData,
     selectedData,
@@ -284,13 +283,18 @@ const App: React.FC = () => {
     console.log(list);
     let path = location.pathname;
     let arr = path.split('/');
-    request('/admin/updateOneEventSpecialEventProductRank', {
+    request('/admin/secure/updateOneEventSpecialEventProductRank', {
       params: {
         code: arr[4],
         list: JSON.stringify(list),
       },
     }).then((data) => {
-      console.log(data);
+      if (data.result) {
+        message.success('保存成功', 3);
+        refreshBodyData(current);
+      } else {
+        message.error({ content: data.message }, 3);
+      }
     });
   };
   // 本质上就是把序号清为0
@@ -437,7 +441,7 @@ const App: React.FC = () => {
             })}
           </div>
           <div>
-            {productListData.map((item: number, index: number) => {
+            {productListData.map((item: number) => {
               return item + ',';
             })}
           </div>
@@ -552,12 +556,12 @@ const App: React.FC = () => {
           setIsCacheModalOpen(false);
         }}
       >
-        <p>确定要清除缓存吗</p>
+        <p>确定要预排序吗</p>
       </Modal>
       <p style={{ color: '#f40' }}>
         如果该勾选类最近新增过产品，可以先用
         <strong style={{ fontWeight: 800, fontSize: 20 }}> 一次 </strong>
-        清除缓存，避免后续排序出错
+        预排序，避免后续排序出错
       </p>
       <SpecialEventProductSortHeader
         setTableData={setTableData}
@@ -608,7 +612,7 @@ const App: React.FC = () => {
             setIsCacheModalOpen(true);
           }}
         >
-          清除缓存
+          预排序
         </Button>
         <Button onClick={handleDelete}>删除</Button>
       </div>

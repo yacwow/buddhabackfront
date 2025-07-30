@@ -111,8 +111,8 @@ const App: React.FC<Props> = (props) => {
             }
           });
         } else {
-          if (arr[3] === 'categoryType' && arr.length >= 5) {
-            const decodedString = decodeURIComponent(arr[4]);
+          if (arr[3] === 'categoryType' && arr.length >= 6) {
+            const decodedString = decodeURIComponent(arr[5]);
             // 先请求信息，查看是否属于该类产品，如果是就返回该产品的基础信息
             request(`/admin/secure/getSingleProductInfo`, {
               params: {
