@@ -7,7 +7,7 @@ interface Props {
   invoiceInfo: {
     firstname: string;
     lastname: string;
-    invoiceid: number;
+    invoiceid: string;
     country: string;
     province: number;
     city: number;

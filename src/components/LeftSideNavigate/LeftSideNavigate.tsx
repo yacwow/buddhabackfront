@@ -71,7 +71,7 @@ const App: React.FC = () => {
       ),
       level === 'superadmin'
         ? getItem(
-          <NavLink to="/backend/productSort/categoryType/Elegant Bodycon Dresses-c3-1">
+          <NavLink to="/backend/productSort/categoryType/">
             {'商品分类排序'}
           </NavLink>,
           '5',
@@ -147,6 +147,18 @@ const App: React.FC = () => {
               {'添加运势预测文章'}
             </a>,
             '44',
+          ),
+          getItem(
+            <NavLink to="/backend/insideBlogArticle">
+              {'展示全部内部博客'}
+            </NavLink>,
+            '83',
+          ),
+          getItem(
+            <a href="/backend/addInsideBlogArticle" >
+              {'添加内部博客'}
+            </a>,
+            '84',
           ),
         ]),
       ])

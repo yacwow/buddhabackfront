@@ -57,10 +57,10 @@ const columns: ColumnsType<DataType> = [
         {whocanapply === 0
           ? '限时折扣'
           : whocanapply === 1
-          ? '普通折扣'
-          : whocanapply === 2
-          ? '个人推广'
-          : '个人折扣'}
+            ? '普通折扣'
+            : whocanapply === 2
+              ? '个人推广'
+              : '个人折扣'}
       </div>
     ),
   },
@@ -112,7 +112,7 @@ const columns: ColumnsType<DataType> = [
     title: '用户名字',
     dataIndex: 'name',
     key: 'name',
-    render: (name) => <div>{name}</div>,
+    render: (name) => <div>{name !== "" ? name : null}</div>,
   },
   {
     title: '个人推广码',
@@ -143,7 +143,7 @@ const App: React.FC = () => {
           let newCoupon = data.data.couponList;
           for (let i = 0; i < newCoupon.length; i++) {
             newCoupon[i].key = i;
-            newCoupon[i].discountType = newCoupon[i].discountType
+            // newCoupon[i].discountType = newCoupon[i].discountType
           }
           setTableData(newCoupon);
         }
@@ -195,7 +195,7 @@ const App: React.FC = () => {
           },
         }}
       />
-      
+
     </div>
   );
 };

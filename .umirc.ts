@@ -92,6 +92,16 @@ export default defineConfig({
       path: '/backend/addfortuneArticle/*',
       component: './FortuneArticle/AddFortuneArticle',
     },
+      {
+      name: '添加/更新内部博客',
+      path: '/backend/addInsideBlogArticle/*',
+      component: './InsideBlog/AddInsideBlog',
+    },
+          {
+      name: '展示全部内部博客',
+      path: '/backend/insideBlogArticle',
+      component: './InsideBlog',
+    },
     {
       name: '指定code销售记录',
       path: '/backend/customerSalesHistoryByCode/*',
@@ -185,7 +195,7 @@ export default defineConfig({
       ],
     },
     {
-      name: '产品排序',
+      name: '分类产品排序',
       path: '/backend/productSort/categoryType/*',
       component: '@/pages/ProductSort',
     },

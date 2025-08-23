@@ -33,7 +33,7 @@ const App: React.FC<Props> = (props) => {
     const newSearchValue = searchValue.filter((item) => item.value !== '');
     setSearchValue(newSearchValue);
 
-    request('/admin/updateFrequestSearchParams', {
+    request('/admin/secure/updateFrequestSearchParams', {
       params: {
         searchParams: JSON.stringify(newSearchValue),
       },

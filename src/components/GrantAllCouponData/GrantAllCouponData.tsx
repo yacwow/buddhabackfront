@@ -18,9 +18,11 @@ interface Props {
     expireDate?: Dayjs;
     used?: boolean;
   };
+  change?: boolean;
 }
 const App: React.FC<Props> = (props) => {
-  const { initialValue, couponId } = props;
+  const { initialValue, couponId, change = false } = props;
+  const [form] = Form.useForm();
   const onFinish = (values: any) => {
     console.log('Success:', values);
     //把dayjs换成普通的时间类型
@@ -63,6 +65,7 @@ const App: React.FC<Props> = (props) => {
       );
       return;
     }
+    params.needUpdate=change;
 
     request('/admin/secure/updateOrSaveDetailCoupon', {
       params: params,
@@ -75,13 +78,16 @@ const App: React.FC<Props> = (props) => {
           },
           4,
         );
+        //如果是添加新的优惠码，则清空表单
+        if (couponId === -1) {
+          //清空表单      
+          form.resetFields();
+        }
       } else {
         message.error(
           {
             content:
-              couponId === -1
-                ? '没添加成功，看下哪里出问题了，大概率是优惠码重复了'
-                : '没修改成功，看下哪里出问题了，大概率是优惠码重复了',
+              data.message || '操作失败',
             style: { marginTop: '40vh' },
           },
           4,
@@ -103,6 +109,7 @@ const App: React.FC<Props> = (props) => {
       labelCol={{ flex: '200px' }}
       labelWrap
       wrapperCol={{ flex: 1 }}
+      form={form}
       // wrapperCol={{ span: 16 }}
       initialValues={initialValue}
       onFinish={onFinish}

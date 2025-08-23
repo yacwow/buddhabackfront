@@ -18,29 +18,30 @@ const App: React.FC = () => {
       //为了获取分类下拉列表，同时懒得在做一个请求了
       request('/admin/secure/getHomePageCategoryInfo').then((data) => {
         if (data.result) {
-          let tempTreeDataArr = [];
-          tempTreeDataArr.push(...data.data.categoryDetail);
-          tempTreeDataArr.push({
-            title: "Best Seller",
-            value: "/bestSeller?page=1",
-            key: "/bestSeller?page=1",
-          });
-          tempTreeDataArr.push({
-            title: "Discount-70%",
-            value: "/saveUpTo70?page=1",
-            key: "/saveUpTo70?page=1",
-          });
-          tempTreeDataArr.push({
-            title: "Trending Now",
-            value: "/trending?page=1",
-            key: "/trending?page=1",
-          });
-          tempTreeDataArr.push({
-            title: "自定义",
-            value: "",
-            key: "自定义",
-          });
-          setTreeDataArr(tempTreeDataArr);
+          // let tempTreeDataArr = [];
+          // tempTreeDataArr.push(...data.data.categoryDetail);
+          // tempTreeDataArr.push({
+          //   title: "Best Seller",
+          //   value: "/bestSeller?page=1",
+          //   key: "/bestSeller?page=1",
+          // });
+          // tempTreeDataArr.push({
+          //   title: "Discount-70%",
+          //   value: "/saveUpTo70?page=1",
+          //   key: "/saveUpTo70?page=1",
+          // });
+          // tempTreeDataArr.push({
+          //   title: "Trending Now",
+          //   value: "/trending?page=1",
+          //   key: "/trending?page=1",
+          // });
+          // tempTreeDataArr.push({
+          //   title: "自定义",
+          //   value: "",
+          //   key: "自定义",
+          // });
+          // setTreeDataArr(tempTreeDataArr);
+          setTreeDataArr(data.data.categoryDetail)
           setCategorySpecialEventSuccessFileList(data.data.categoryInfo);
         }
       });
@@ -54,7 +55,7 @@ const App: React.FC = () => {
   }, []);
   return (
     <LayOut>
-      <h3>勾选大类的时候则会取消所有的该大类下面的小类</h3>
+      <h3>目前该组件没用--直接从衣服那个项目抄过来的，那个项目是三个level的category，这个是两个，想用以后改</h3>
       <ShowCategoryInHomePageBottomComp />
     </LayOut>
   );

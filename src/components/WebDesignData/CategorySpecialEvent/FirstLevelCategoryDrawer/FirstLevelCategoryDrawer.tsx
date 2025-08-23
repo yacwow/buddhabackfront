@@ -1,8 +1,8 @@
 import { PlusOutlined } from '@ant-design/icons';
 import React, { SetStateAction, useState } from 'react';
-import type { RcFile, UploadProps } from 'antd/es/upload';
+import type { RcFile} from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
-import { Button, message, Modal, TreeSelect, Upload } from 'antd';
+import {  message, Modal, Upload } from 'antd';
 interface Props {
   setLeftDrawerCategoryInfo: React.Dispatch<SetStateAction<any>>;
   leftDrawerCategoryInfo: {

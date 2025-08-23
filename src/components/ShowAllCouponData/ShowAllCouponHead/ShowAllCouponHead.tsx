@@ -81,9 +81,9 @@ const App: React.FC<Props> = (props) => {
         let newCoupon = data.data.couponList;
         for (let i = 0; i < newCoupon.length; i++) {
           newCoupon[i].key = i;
-          newCoupon[i].discountType = newCoupon[i].discountamount
-            ? 'amount'
-            : 'percent';
+          // newCoupon[i].discountType = newCoupon[i].discountamount
+          //   ? 'amount'
+          //   : 'percent';
         }
         setTableData(newCoupon);
       }

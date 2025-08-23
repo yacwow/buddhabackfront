@@ -28,7 +28,7 @@ const App: React.FC = () => {
   return (
     <LayOut>
       {initialValue && couponId && (
-        <GrantAllCouponData initialValue={initialValue} couponId={couponId} />
+        <GrantAllCouponData initialValue={initialValue} couponId={couponId} change={false} />
       )}
     </LayOut>
   );

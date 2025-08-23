@@ -24,6 +24,7 @@ const App: React.FC<Props> = ({ selectedCategoryTitle }) => {
     });
     setActive(newActive);
     console.log(newActive);
+    console.log(selectedCategoryTitle)
   }, [selectedCategoryTitle]);
   return (
     <div className={styles.wrap}>

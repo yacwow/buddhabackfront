@@ -89,7 +89,7 @@ const App: React.FC = () => {
     <LayOut>
       <h2>时间选择的时候先选时分秒后选年月日，不然年月日会回归当前日</h2>
       {initialValue && couponId && (
-        <GrantAllCouponData initialValue={initialValue} couponId={couponId} />
+        <GrantAllCouponData initialValue={initialValue} couponId={couponId} change={true} />
       )}
     </LayOut>
   );

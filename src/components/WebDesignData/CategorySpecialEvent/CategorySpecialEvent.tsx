@@ -24,29 +24,30 @@ const App: React.FC = () => {
       //为了获取分类下拉列表，同时懒得在做一个请求了
       request('/admin/secure/getHomePageCategoryInfo').then((data) => {
         if (data.result) {
-          let tempTreeDataArr = [];
-          tempTreeDataArr.push(...data.data.categoryDetail);
-          tempTreeDataArr.push({
-            title: "Best Seller",
-            value: "/bestSeller?page=1",
-            key: "/bestSeller?page=1",
-          });
-          tempTreeDataArr.push({
-            title: "Discount-70%",
-            value: "/saveUpTo70?page=1",
-            key: "/saveUpTo70?page=1",
-          });
-          tempTreeDataArr.push({
-            title: "Trending Now",
-            value: "/trending?page=1",
-            key: "/trending?page=1",
-          });
-          tempTreeDataArr.push({
-            title: "自定义",
-            value: "",
-            key: "自定义",
-          });
-          setTreeDataArr(tempTreeDataArr);
+          // let tempTreeDataArr = [];
+          // tempTreeDataArr.push(...data.data.categoryDetail);
+          // tempTreeDataArr.push({
+          //   title: "Best Seller",
+          //   value: "/bestSeller?page=1",
+          //   key: "/bestSeller?page=1",
+          // });
+          // tempTreeDataArr.push({
+          //   title: "Discount-70%",
+          //   value: "/saveUpTo70?page=1",
+          //   key: "/saveUpTo70?page=1",
+          // });
+          // tempTreeDataArr.push({
+          //   title: "Trending Now",
+          //   value: "/trending?page=1",
+          //   key: "/trending?page=1",
+          // });
+          // tempTreeDataArr.push({
+          //   title: "自定义",
+          //   value: "",
+          //   key: "自定义",
+          // });
+          // setTreeDataArr(tempTreeDataArr);
+          setTreeDataArr(data.data.categoryDetail)
           setCategorySpecialEventSuccessFileList(data.data.categoryInfo);
         }
       });
@@ -57,6 +58,59 @@ const App: React.FC = () => {
       }
     });
   }, []);
+  const [categoryTreeDataArr, setCategoryTreeDataArr] = useState<
+    {
+      imgSrc?: string;
+      title: string;
+      value: string;
+      categoryId?: number;
+      author?: string;
+      updateTime?: string;
+      children?: {
+        imgSrc: string;
+        title: string;
+        value: string;
+        categoryId: number;
+        author: string;
+        updateTime: string;
+        children: {
+          imgSrc: string;
+          title: string;
+          value: string;
+          categoryId: number;
+          author: string;
+          updateTime: string;
+        }[];
+      }[];
+    }[]
+  >([]);
+  useEffect(() => {
+    if (treeDataArr.length > 0) {
+      let tempTreeDataArr = [];
+      tempTreeDataArr.push(...treeDataArr);
+      tempTreeDataArr.push({
+        title: "Best Seller",
+        value: "/bestSeller?page=1",
+        key: "/bestSeller?page=1",
+      });
+      tempTreeDataArr.push({
+        title: "Discount-70%",
+        value: "/saveUpTo70?page=1",
+        key: "/saveUpTo70?page=1",
+      });
+      tempTreeDataArr.push({
+        title: "Trending Now",
+        value: "/trending?page=1",
+        key: "/trending?page=1",
+      });
+      tempTreeDataArr.push({
+        title: "自定义",
+        value: "",
+        key: "自定义",
+      });
+      setCategoryTreeDataArr(tempTreeDataArr);
+    }
+  }, [treeDataArr]);
 
   useEffect(() => {
     console.log(leftDrawerCategoryInfo);
@@ -67,7 +121,7 @@ const App: React.FC = () => {
       <br />
       {
         <StructurePictureImgUpload
-          treeDataArr={treeDataArr}
+          treeDataArr={categoryTreeDataArr}
           controlledParam="category"
           setSuccessFileList={setCategorySpecialEventSuccessFileList}
           successFileList={categorySpecialEventSuccessFileList}

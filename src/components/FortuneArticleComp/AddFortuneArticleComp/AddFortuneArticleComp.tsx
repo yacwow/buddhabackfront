@@ -1,7 +1,7 @@
-import '@wangeditor/editor/dist/css/style.css'; // 引入 css
+// import '@wangeditor/editor/dist/css/style.css'; // 引入 css
 import React, { useState, useEffect } from 'react';
 // import { Editor, Toolbar } from '@wangeditor/editor-for-react';
-import { IDomEditor } from '@wangeditor/editor';
+// import { IDomEditor, IEditorConfig, IToolbarConfig } from '@wangeditor/editor';
 import { request } from '@umijs/max';
 import {
   Button,
@@ -20,6 +20,7 @@ import { RcFile, UploadProps } from 'antd/es/upload';
 import styles from './AddFortuneArticleComp.less';
 import './AddFortuneArticleComp.css';
 import { history } from '@umijs/max';
+const [messageApi, contextHolder] = message.useMessage();
 
 const yearOptions: { value: string | number, label: string | number }[] = [];
 
@@ -48,7 +49,7 @@ const MyEditor = () => {
   const [previewTitle, setPreviewTitle] = useState('');
   const [previewOpen, setPreviewOpen] = useState(false);
   // editor 实例
-  const [editor, setEditor] = useState<IDomEditor | null>(null); // TS 语法
+  // const [editor, setEditor] = useState<IDomEditor | null>(null); // TS 语法
   const [successFileList, setSuccessFileList] = useState<
     {
       url: string;
@@ -65,14 +66,16 @@ const MyEditor = () => {
   const [active, setActive] = useState(true);
   const [fortuneId, setFortuneId] = useState('');
   const [update, setUpdate] = useState(false);
+  const [homePageShowed, setHomePageShowed] = useState(false);
 
+  const [error, setError] = useState("")
 
   useEffect(() => {
     let pathArr = location.pathname.split('/');
-    console.log(pathArr);
+    // console.log(pathArr);
     if (pathArr.length > 3) {
       if (isNaN(+pathArr[3])) {
-        message.info(
+        messageApi.info(
           {
             content: 'url有问题',
             style: { marginTop: '40vh' },
@@ -95,8 +98,9 @@ const MyEditor = () => {
           setMonth(data.data.month);
           setYear(data.data.year);
           setMasked(data.data.masked === null ? false : data.data.masked);
+          setHomePageShowed(data.data.homePageShowed === null ? false : data.data.homePageShowed);
         } else {
-          message.info(
+          messageApi.info(
             {
               content: '没找到这篇文章，不知道哪里有问题，麻烦重进一次',
               style: { marginTop: '40vh' },
@@ -109,40 +113,12 @@ const MyEditor = () => {
       setUpdate(false);
     }
   }, []);
-
-  // // 工具栏配置,全部都用，不需要配置
-  // const toolbarConfig: Partial<IToolbarConfig> = {}; // TS 语法
-
-  // //   // 编辑器配置
-  // //   const editorConfig: Partial<IEditorConfig> = {
-  // //     // TS 语法
-  // //     placeholder: '请输入内容...',
-  // //   };
-  // const editorConfig: Partial<IEditorConfig> = {
-  //   placeholder: 'Start writing...',
-  //   readOnly: false,
-  //   autoFocus: true,
-  //   scroll: true,
-  //   MENU_CONF: {
-  //     link: {
-  //       linkTarget: '_self', // 配置链接在当前页面打开
-  //     },
-  //   },
-  // };
-
-  // 及时销毁 editor ，重要！
-  useEffect(() => {
-    return () => {
-      if (editor === null) return;
-      editor.destroy();
-      setEditor(null);
-    };
-  }, [editor]);
+  const [modelOpen, setModelOpen] = useState(false)
 
   const uploadButton = (
     <div onClick={() => {
       if (masked) {
-        message.error('遮罩的图片不需要上传');
+        messageApi.error('遮罩的图片不需要上传');
         return;
       }
     }}>
@@ -183,9 +159,9 @@ const MyEditor = () => {
           },
         ]);
         // antd的message方法
-        message.success('上传成功');
+        messageApi.success('上传成功');
       } else {
-        message.error('上传失败');
+        messageApi.error('上传失败');
       }
     }
     setFileList(newFileList);
@@ -199,10 +175,10 @@ const MyEditor = () => {
       (data) => {
         if (data.result) {
           //删除成功
-          message.success('删除成功');
+          messageApi.success('删除成功');
           setSuccessFileList([]);
         } else {
-          message.error('删除失败');
+          messageApi.error('删除失败');
         }
       },
     );
@@ -237,7 +213,7 @@ const MyEditor = () => {
 
   const updateOrAddFortuneArticle = () => {
     if (successFileList.length === 0) {
-      message.error(
+      messageApi.error(
         { content: '必须要有跳转前的图片', style: { marginTop: '40vh' } },
         5,
       );
@@ -264,11 +240,12 @@ const MyEditor = () => {
         fortuneId,
         month,
         year,
-        masked
+        masked,
+        homePageShowed
       },
     }).then((data) => {
       if (data.result) {
-        message.info({ content: '修改成功', style: { marginTop: '40vh' } }, 5);
+        messageApi.info({ content: '修改成功', style: { marginTop: '40vh' } }, 5);
         if (update) {
         } else {
           setFortuneId('' + data.data.id);
@@ -282,6 +259,19 @@ const MyEditor = () => {
   // const [fixedHtml, setFixedHtml] = useState('');
   return (
     <>
+      {contextHolder}
+      <Modal
+        title="Basic Modal"
+        open={modelOpen}
+        onOk={() => {
+          console.log(active)
+          setActive(!active);
+          setModelOpen(false)
+        }}
+        onCancel={() => { setModelOpen(false) }}
+      >
+        <p>{error}</p>
+      </Modal>
       <h2>图片，用于跳转前的小图</h2>
       <div>
         <h4>
@@ -314,34 +304,51 @@ const MyEditor = () => {
           setIntroduction(e.target.value);
         }}
       />
-      <h2>年</h2>
-      <Select
-        value={year}
-        options={yearOptions}
-        style={{ width: 120 }}
-        placeholder="请选择年"
-        onChange={(value) => {
-          if (value === null || value === undefined) {
-            setYear(null);
-          } else {
-            setYear(+value);
-          }
-        }}
-      />
-      <h2>月</h2>
-      <Select
-        value={month}
-        options={monthOptions}
-        style={{ width: 120 }}
-        placeholder="请选择月"
-        onChange={(value) => {
-          if (value === null || value === undefined) {
-            setMonth(null);
-          } else {
-            setMonth(+value);
-          }
-        }}
-      />
+      <div style={{ display: 'flex', alignItems: "center" }}>
+        <h2 >年</h2>
+        <Select
+          value={year}
+          options={yearOptions}
+          style={{ width: 120 }}
+          placeholder="请选择年"
+          onChange={(value) => {
+            if (value === null || value === undefined) {
+              setYear(null);
+            } else {
+              setYear(+value);
+            }
+          }}
+        />
+        <h2 style={{ marginLeft: 20 }}>月</h2>
+        <Select
+          value={month}
+          options={monthOptions}
+          style={{ width: 120 }}
+          placeholder="请选择月"
+          onChange={(value) => {
+            if (value === null || value === undefined) {
+              setMonth(null);
+            } else {
+              setMonth(+value);
+            }
+          }}
+        />
+        <h2 style={{ marginLeft: 20 }}>是否展示在首页</h2>
+        <Switch
+          checked={homePageShowed}
+          checkedChildren="是" unCheckedChildren="否"
+          onChange={(value) => {
+
+            if (value && !active) {
+              messageApi.error({ content: "不能展示一个在fortune主题页面都不展示的文章，请先勾选展示选项", style: { marginTop: "40vh" } }, 6)
+              return;
+            } else {
+              setHomePageShowed(value)
+            }
+          }}
+        />
+      </div>
+
       <h2>是否遮罩（独立的图片不需要，主要是生肖那张图才需要）</h2>
       <Switch checked={masked} onChange={(checked) => {
         if (checked) {
@@ -368,24 +375,7 @@ const MyEditor = () => {
         className={styles.contentContainer}
         dangerouslySetInnerHTML={{ __html: html }}
       />
-      {/* 
-      <div style={{ border: '1px solid #ccc', zIndex: 100, marginTop: 30 }}>
-        <h2>文章原文编辑器</h2>
-        <Toolbar
-          editor={editor}
-          defaultConfig={toolbarConfig}
-          mode="default"
-          style={{ borderBottom: '1px solid #ccc' }}
-        />
-        <Editor
-          defaultConfig={editorConfig}
-          value={html}
-          onCreated={setEditor}
-          onChange={(editor) => setHtml(editor.getHtml())}
-          mode="default"
-          style={{ minHeight: '500px', maxHeight: 800, overflowY: 'scroll' }}
-        />
-      </div> */}
+
 
       <h2>文章展示位置--数字越大，排序越前</h2>
       <InputNumber
@@ -407,7 +397,34 @@ const MyEditor = () => {
         unCheckedChildren="不展示"
         checked={active}
         onChange={() => {
-          setActive(!active);
+          if (!active) {
+            if (month !== null && year !== null) {
+              // 当前时间
+              const now = new Date();
+              const currentYear = now.getFullYear();
+              const currentMonth = now.getMonth() + 1; // getMonth 返回 0-11，所以要 +1
+
+              // 允许的最大年月 = 当前年月 + 1 个月
+              let allowedYear = currentYear;
+              let allowedMonth = currentMonth + 1;
+              if (allowedMonth > 12) {
+                allowedMonth = 1;
+                allowedYear += 1;
+              }
+
+              // 判断是否超过允许的年月
+              if (year > allowedYear || (year === allowedYear && month > allowedMonth)) {
+                setError(`注意：展示的是 ${allowedYear} 年 ${allowedMonth} 月，这个月份在当前月之后两个月了。确定需要修改，则点击确认，否则取消`)
+                setModelOpen(true)
+                return;
+              }
+            }
+
+          } else {
+            setActive(!active)
+            setHomePageShowed(!active)
+          }
+
         }}
       />
 

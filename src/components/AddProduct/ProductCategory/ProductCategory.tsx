@@ -9,8 +9,6 @@ const App: React.FC = () => {
     useModel('productUpdateData');
 
   useEffect(() => {
-    console.log(productCategoryInfo);
-    console.log(treeDataArr[0].children[0].value === productCategoryInfo[0])
     const isChecked = treeDataArr.some((node) =>
       node.children.some((child) =>
         productCategoryInfo.includes(child.value)

@@ -49,6 +49,7 @@ const App: React.FC = () => {
         setSelectedCategoryTitle(filteredCategoryTitle);
       } else {
         //小类，如果有一样的，不管，没有一样的，添加
+        console.log("in123")
         let newSelectedCategoryTitle = structuredClone(selectedCategoryTitle);
         let hasSame = newSelectedCategoryTitle.some((item) => {
           return (
@@ -57,6 +58,7 @@ const App: React.FC = () => {
               item.secondLevelIndex === -1)
           );
         });
+        console.log("in123")
         if (hasSame) {
           return;
         } else {
@@ -67,6 +69,7 @@ const App: React.FC = () => {
             secondLevelIndex,
             imgSrc,
           });
+          console.log("in123")
           setSelectedCategoryTitle(newSelectedCategoryTitle);
         }
       }
@@ -197,10 +200,6 @@ const App: React.FC = () => {
       );
     }
   }, [homeBottomCategoryInfo]);
-  //   const {
-  //     categorySpecialEventSuccessFileList,
-  //     setCategorySpecialEventSuccessFileList,
-  //   } = useModel('categoryManagement');
 
   const buildCategorySelect = (item: {
     title: string;
@@ -208,8 +207,9 @@ const App: React.FC = () => {
     secondLevelIndex: number;
     value: string;
   }) => {
+    console.log(treeDataArr, item.firstLevelIndex, item.secondLevelIndex);
     if (item.secondLevelIndex === -1) {
-      let children = treeDataArr[item.firstLevelIndex].children;
+      let children = treeDataArr;
       let subCategory = [];
       for (let i = 0; i < children.length; i++) {
         let subSubCategory = children[i].children;
@@ -217,6 +217,7 @@ const App: React.FC = () => {
           subCategory.push(subSubCategory[j]);
         }
       }
+      console.log(subCategory)
       return subCategory.map((item1, index) => {
         return (
           <Checkbox
@@ -237,9 +238,7 @@ const App: React.FC = () => {
         );
       });
     } else {
-      return treeDataArr[item.firstLevelIndex].children[
-        item.secondLevelIndex
-      ].children.map((item1, index2) => {
+      return treeDataArr[item.firstLevelIndex].children.map((item1, index2) => {
         return (
           <Checkbox
             key={index2}
@@ -320,7 +319,9 @@ const App: React.FC = () => {
     newSelectedCategoryTitle[index] = a;
     setSelectedCategoryTitle(newSelectedCategoryTitle);
   };
-
+  useEffect(() => {
+    console.log(selectedCategoryTitle);
+  }, [selectedCategoryTitle]);
   return (
     <div>
       {treeDataArr.map((item, index) => {
