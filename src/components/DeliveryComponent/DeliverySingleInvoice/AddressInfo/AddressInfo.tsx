@@ -19,9 +19,7 @@ interface Props {
 }
 const App: React.FC<Props> = (props) => {
   const { invoiceInfo } = props;
-  console.log(invoiceInfo);
   const { level } = useModel('global');
-  console.log(level);
   const [buttonDisable, setButtonDisable] = useState(false);
   const onFinish = (values: any) => {
     console.log('Success:', values);
@@ -41,6 +39,9 @@ const App: React.FC<Props> = (props) => {
               message.info({ content: '修改成功' }, 4);
               setButtonDisable(false);
             }
+          }else{
+            message.error({ content: '修改失败，请稍后再试' }, 4);
+            setButtonDisable(false);
           }
         })
         .catch(() => {
@@ -118,7 +119,7 @@ const App: React.FC<Props> = (props) => {
       <Form.Item
         label="区域"
         name="area"
-        rules={[{ required: true, message: '请输入' }]}
+      // rules={[{ required: true, message: '请输入' }]}
       >
         <Input />
       </Form.Item>
@@ -138,6 +139,13 @@ const App: React.FC<Props> = (props) => {
       >
         <Input />
       </Form.Item>
+      <Form.Item
+        label="通知消息的email号"
+        name="updateemail"
+        rules={[{ type: 'email' }, { required: true, message: '请输入' }]}
+      >
+        <Input />
+      </Form.Item>
 
       <Form.Item
         label="手机号码"
@@ -145,18 +153,11 @@ const App: React.FC<Props> = (props) => {
         rules={[
           {
             required: true,
-            validator: (rule, val) => {
-              const mobileReg =
-                /^(0([1-9]{1}-?[1-9]\d{3}|[1-9]{2}-?\d{3}|[1-9]{2}\d{1}-?\d{2}|[1-9]{2}\d{2}-?\d{1})-?\d{4}|0[789]0-?\d{4}-?\d{4}|050-?\d{4}-?\d{4})$/;
-              switch (true) {
-                case !Boolean(val):
-                  return Promise.reject('手机号有误');
-                case !mobileReg.test(val.trim()):
-                  return Promise.reject('手机号有误');
-                default:
-                  return Promise.resolve();
-              }
-            },
+            message: '请输入',
+          },
+          {
+            pattern: /^\+?[1-9]\d{1,14}$/,
+            message: '请输入有效的国际手机号，例如 +14155552671',
           },
         ]}
       >

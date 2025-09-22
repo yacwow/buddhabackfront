@@ -29,6 +29,7 @@ interface InvoiceDataType {
   timesale: number;
   createTime: string;
   stockStatus: string;
+  cartDetailId:number;
 }
 interface InvoicePaymentInfo {
   invoiceId: string;
@@ -98,6 +99,7 @@ const App: React.FC = () => {
                   timesale: item.timesale,
                   createTime: formatTimeFromStr(item.createTime),
                   stockStatus: item.stockStatus,
+                  cartDetailId:item.cartDetailId,
                 };
               },
             );
@@ -398,6 +400,7 @@ const App: React.FC = () => {
                   invoiceId,
                   productColor: data.color,
                   productSize: data.size,
+                  cartDetailId:data.cartDetailId
                 },
               }).then((data) => {
                 if (data.result) {

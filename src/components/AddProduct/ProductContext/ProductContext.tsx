@@ -1,16 +1,13 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { request } from '@umijs/max';
 import { useModel } from '@umijs/max';
 import { Button, Input, message, Modal, Select, Upload } from 'antd';
 import { RcFile, UploadFile, UploadProps } from 'antd/es/upload';
-import React, { useEffect, useState } from 'react';
-import BigImgUpload from './BigImgUpload';
+import React, { useState } from 'react';
 import ImageUpload from './ImageUpload';
 import ProductBasicInfo from './ProductBasicInfo';
 import styles from './ProductContext.less';
-import SmallImgUpload from './SmallImgUpload';
 import ImageUploadWrap from './ImageUploadWrap';
-interface Props { }
+
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -19,7 +16,7 @@ const getBase64 = (file: RcFile): Promise<string> =>
     reader.onerror = (error) => reject(error);
   });
 
-const App: React.FC<Props> = (props) => {
+const App: React.FC = () => {
   const {
     bigImgSuccessList,
     setBigImgSuccessList,
@@ -27,8 +24,7 @@ const App: React.FC<Props> = (props) => {
     setEditStatus,
     stockStatus,
     setStockStatus,
-    successFileList,
-    setSuccessFileList,
+
     mp4Url,
     setMp4Url,
     sortType,
@@ -113,7 +109,6 @@ const App: React.FC<Props> = (props) => {
   //处理mp4的上传， 目前基本上没用到过
   const handleMP4StatusChange: UploadProps['onChange'] = ({
     file,
-    fileList: newFileList,
   }) => {
     const { status, response } = file;
     // 上传完成？
@@ -253,6 +248,7 @@ const App: React.FC<Props> = (props) => {
           </Upload>
         </div>
       </div>
+
       <h3>color行前端具体显示的值;类似于BUNDLE & SAVE;CHOOSE YOUR STRING: </h3>
       <Input
         placeholder="如果不输入，则前端展示为Color"

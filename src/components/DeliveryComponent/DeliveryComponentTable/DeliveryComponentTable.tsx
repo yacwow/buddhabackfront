@@ -16,6 +16,7 @@ interface DataType {
   finalPrice: number;
   status: string;
   deliveryStatus: string;
+  userEmail: string;
 }
 
 const columns: ColumnsType<DataType> = [
@@ -53,25 +54,28 @@ const columns: ColumnsType<DataType> = [
     },
   },
   {
-    title: '用户邮箱',
+    title: '注册邮箱',
+    dataIndex: 'userEmail',
+    key: 'userEmail',
+    sorter: (a: any, b: any) => (a.userEmail || '').localeCompare(b.userEmail || ''),
+  },
+  {
+    title: '联系邮箱',
     dataIndex: 'email',
     key: 'email',
-    sorter: (a: any, b: any) => {
-      return a.email - b.email;
-    },
+    sorter: (a: any, b: any) => (a.email || '').localeCompare(b.email || ''),
   },
   {
     title: '国家',
     dataIndex: 'country',
     key: 'country',
+    sorter: (a: any, b: any) => (a.country || '').localeCompare(b.country || ''),
   },
   {
     title: '省份',
     dataIndex: 'province',
     key: 'province',
-    sorter: (a: any, b: any) => {
-      return a.province - b.province;
-    },
+    sorter: (a: any, b: any) => (a.province || '').localeCompare(b.province || ''),
   },
   {
     title: '实际订单价格',
@@ -180,6 +184,7 @@ const App: React.FC<Props> = (props) => {
       price: +item.price,
       finalPrice: +item.finalPrice,
       status: item.status,
+      userEmail: item.userEmail,
       deliveryStatus: item.deliveryStatus,
     };
   });

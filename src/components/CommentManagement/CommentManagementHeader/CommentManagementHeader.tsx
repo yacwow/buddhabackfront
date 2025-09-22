@@ -1,5 +1,5 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { Button, DatePicker,  message, Select } from 'antd';
+import { Button, DatePicker, message, Select } from 'antd';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import React, { Dispatch, SetStateAction } from 'react';
@@ -148,7 +148,7 @@ const App: React.FC<Props> = (props) => {
   };
   const submitChange = () => {
     let commentList = commentDataSource.reduce((acc, item) => {
-      const { productId, commentId, helpful, active } = item;
+      const { productId, commentId, helpful, active, audit } = item;
       // 如果 commentId 为空，则跳过该项
       if (!commentId) return acc;
 
@@ -156,10 +156,10 @@ const App: React.FC<Props> = (props) => {
         acc[productId] = [];
       }
 
-      acc[productId].push({ commentId, helpful, active });
+      acc[productId].push({ commentId, helpful, active, audit:!!audit });
 
       return acc;
-    }, {} as Record<string, { commentId: number; helpful: boolean; active: boolean }[]>);
+    }, {} as Record<string, { commentId: number; helpful: boolean; active: boolean, audit: boolean }[]>);
     console.log(commentList)
     // return;
     request('/admin/secure/changeCustomerComment', {
@@ -187,12 +187,12 @@ const App: React.FC<Props> = (props) => {
             },
             3,
           );
-          let newCommentDataSource=structuredClone(commentDataSource)
-          newCommentDataSource.map ((item)=>{
-            item.audit=true;
-            return item;
-          })
-          setCommentDataSource(newCommentDataSource)
+          // let newCommentDataSource = structuredClone(commentDataSource)
+          // newCommentDataSource.map((item) => {
+          //   item.audit = true;
+          //   return item;
+          // })
+          // setCommentDataSource(newCommentDataSource)
         }
       }
     });

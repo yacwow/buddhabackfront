@@ -420,7 +420,7 @@ const App: React.FC = () => {
         // console.log(data);
         return (
           <Select
-            defaultValue={stockStatus}
+            value={stockStatus}
             style={{ width: 120 }}
             onChange={(e) => handleStockChange(e, data)}
             disabled={stockStatus === 'cancel'}
@@ -452,14 +452,23 @@ const App: React.FC = () => {
                   invoiceId,
                   productColor: data.color,
                   productSize: data.size,
+                  cartDetailId: data.invoiceProductDetailId
                 },
-              }).then((data) => {
-                if (data.result) {
-                  console.log(stockStatus);
+              }).then((res) => {
+                if (res.result) {
                   if (stockStatus === 'nostock') {
                     setNoProductActive(true);
                   }
                   message.info({ content: '修改成功' }, 4);
+                  let newInvoiceData = invoiceData.map((item) =>{
+                    if (item.invoiceProductDetailId === data.invoiceProductDetailId&&stockStatus.toLowerCase()!=="delivery") { 
+                      return {...item,deliveryCode:""}  // 新对象
+                    }else{
+                      return item;
+                    }
+                  })
+                  console.log(newInvoiceData)
+                  setInvoiceData(newInvoiceData);
                 } else {
                   message.error({ content: '修改失败' }, 4);
                 }
@@ -491,6 +500,13 @@ const App: React.FC = () => {
         }
         const resultString = Array.from(deliveryCodeSet).join('//');
         setDeliveryCode(resultString);
+        let newInvoiceData = invoiceData.map((item) =>
+          item.invoiceProductDetailId === record.invoiceProductDetailId
+            ? { ...item, stockStatus: "delivery" }  // 新对象
+            : item
+        );
+        console.log("newInvoiceData", newInvoiceData);
+        setInvoiceData(newInvoiceData);
       } else {
         message.error(
           { content: '没有保存成功,稍后再试', style: { marginTop: '40vh' } },
@@ -837,7 +853,7 @@ const App: React.FC = () => {
       >
         添加/修改订单快递单号
       </Button> */}
-      <span style={{marginLeft:20}}>订单快递状态:</span>
+      <span style={{ marginLeft: 20 }}>订单快递状态:</span>
       <span style={{ minWidth: 150, display: 'inline-block' }}>
         {deliveryStatus === 'alldelivery'
           ? '全部发送有单号'

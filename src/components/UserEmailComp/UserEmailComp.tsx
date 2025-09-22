@@ -33,14 +33,18 @@ const App: React.FC = () => {
   //每一个都变成一个展示组件
   const buildBody = () => {
     return userInfoList.map((item: any, index: number) => {
-      let pictureSrc = item.picturesrc.split(';;');
-      // eslint-disable-next-line array-callback-return
       let str = [];
-      for (let i = 0; i < pictureSrc.length; i++) {
-        if (pictureSrc[i] !== '') {
-          str.push(pictureSrc[i]);
+      if (item.picturesrc) {
+        let pictureSrc = item.picturesrc.split(';;');
+        // eslint-disable-next-line array-callback-return
+
+        for (let i = 0; i < pictureSrc.length; i++) {
+          if (pictureSrc[i] !== '') {
+            str.push(pictureSrc[i]);
+          }
         }
       }
+
       return (
         <div key={index} className={styles.oneEmail}>
           {item.solved ? (
@@ -59,6 +63,15 @@ const App: React.FC = () => {
             </a>
           </div>
           <div>
+            <span className={styles.label}>{'用户名字:'}</span>
+            {[item?.firstName, item?.lastName].filter(Boolean).join(" ")}
+          </div>
+          <div>
+            <span className={styles.label}>{'类型:'}</span>
+            {item.typeOfFeedback}
+          </div>
+
+          <div>
             <span className={styles.label}>{'用户主题:'}</span>
             {item.title}
           </div>
@@ -69,7 +82,7 @@ const App: React.FC = () => {
           <div style={{ display: 'flex' }}>
             {str.map((item: string, index: number) => {
               return (
-                <Image width={150} height={100} key={index} src={item} alt="" />
+                <Image width={120} height={100} key={index} src={item} alt="" style={{paddingRight:20}} />
               );
             })}
           </div>
@@ -111,7 +124,7 @@ const App: React.FC = () => {
         defaultCurrent={1}
         total={count}
         current={page}
-        onChange={(page, pageSize) => {
+        onChange={(page,) => {
           setPage(page);
         }}
       />

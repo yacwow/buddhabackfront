@@ -276,7 +276,7 @@ const App: React.FC = () => {
         mp4Url: mp4,
         sortType,
         function: productDescription,
-        fraudWishListNum: fraudWishList === 0 ? generateWishlistNumber(commentDataSource.length) : fraudWishList,
+        fraudWishListNum: (fraudWishList === null || fraudWishList === 0) ? generateWishlistNumber(commentDataSource.length) : fraudWishList,
         bigImgSrc: bigImgSuccessList[0].url,
         smallImgSrcList: JSON.stringify(handleSmallImgSuccessList()),
         productDetailSize: productSizeStr,

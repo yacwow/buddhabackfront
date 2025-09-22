@@ -2,23 +2,25 @@ import { defineConfig } from '@umijs/max';
 
 export default defineConfig({
   antd: {},
-  dva: {
-    // immer: true,
-  },
   https: {},
   access: {},
-  clientLoader: {},
   model: {},
   initialState: {},
-  request: {},
   layout: {
     title: '',
   },
-  jsMinifier: 'esbuild',
-  jsMinifierOptions: {
-    drop: ['console', 'debugger'],
+  mfsu: false,
+  extraBabelPlugins: process.env.NODE_ENV === 'production' ? [] : [],
+  hash: true, //不开好像有时候因为缓存会有问题
+  codeSplitting: {
+    jsStrategy: 'granularChunks', // 启用 granularChunks 策略
+    jsStrategyOptions: {
+      // asyncChunks: true, // 启用异步分包
+    },
   },
-  // plugins: ['@/plungin.js'],
+
+  request: {},
+
   proxy: {
     '/admin': {
       target: 'http://localhost:666/',
@@ -92,12 +94,12 @@ export default defineConfig({
       path: '/backend/addfortuneArticle/*',
       component: './FortuneArticle/AddFortuneArticle',
     },
-      {
+    {
       name: '添加/更新内部博客',
       path: '/backend/addInsideBlogArticle/*',
       component: './InsideBlog/AddInsideBlog',
     },
-          {
+    {
       name: '展示全部内部博客',
       path: '/backend/insideBlogArticle',
       component: './InsideBlog',
@@ -168,8 +170,13 @@ export default defineConfig({
       path: '/backend/product',
       routes: [
         {
-          name: '添加/修改产品具体信息',
-          path: '/backend/product/productContext/*',
+          name: '添加产品具体信息',
+          path: '/backend/product/productContext',
+          component: '@/pages/Product',
+        },
+        {
+          name: '修改产品具体信息',
+          path: '/backend/product/productContext/:id',
           component: '@/pages/Product',
         },
         {

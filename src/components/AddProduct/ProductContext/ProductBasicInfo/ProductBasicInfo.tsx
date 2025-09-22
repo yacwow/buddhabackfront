@@ -13,8 +13,6 @@ const App: React.FC = () => {
     setStockNum,
     setFraudSoldAmount,
     fraudSoldAmount,
-    setFraudCommentNum,
-    fraudCommentNum,
     setProductRemark,
     productRemark,
     productWeight,

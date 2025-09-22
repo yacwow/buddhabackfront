@@ -45,17 +45,33 @@ const App: React.FC = () => {
   }, [pageSize, page]);
 
   //改变当前行是否活跃
-  const handleChange = (needChangeItem: any) => {
-    console.log(needChangeItem);
+  const handleActiveChange = (needChangeItem: any) => {
     const newData = structuredClone(commentDataSource).filter((item) => {
       if (item.key !== needChangeItem.key) {
         return item;
       } else {
         item.active = !item.active;
+        item.audit = true;
         return item;
       }
     });
+    setCommentDataSource([...newData]);
+  };
 
+  //改变当前行是否审核
+  const handleAuditChange = (needChangeItem: any) => {
+    console.log(needChangeItem);
+    const newData = structuredClone(commentDataSource).filter((item) => {
+      if (item.key !== needChangeItem.key) {
+        return item;
+      } else {
+        item.audit = !item.audit;
+        if (item.audit === false) {
+          item.active = false;
+        }
+        return item;
+      }
+    });
     setCommentDataSource([...newData]);
   };
 
@@ -183,11 +199,9 @@ const App: React.FC = () => {
       dataIndex: 'imgSrcList',
       width: '20%',
       render: (_, record: commentDataSourceType) => {
-        console.log(record);
         let imgSrcListData = record.imgSrcList
           ?.split(';;')
           .filter((item) => item !== '');
-        console.log(imgSrcListData);
         if (imgSrcListData === undefined || imgSrcListData === null) {
           return null;
         }
@@ -256,12 +270,12 @@ const App: React.FC = () => {
         </>
       ),
       sorter: (a: any, b: any) => {
-        return a.active - b.active;
+        return a.helpful - b.helpful;
       },
     },
     {
       title: '操作评论',
-      dataIndex: 'operation',
+      dataIndex: 'active',
       width: '10%',
       render: (_, record: { key: React.Key; active: boolean }) => (
         <>
@@ -270,7 +284,7 @@ const App: React.FC = () => {
             checkedChildren="开启"
             unCheckedChildren="关闭"
             checked={record.active}
-            onChange={() => handleChange(record)}
+            onChange={() => handleActiveChange(record)}
           />
         </>
       ),
@@ -282,8 +296,19 @@ const App: React.FC = () => {
       title: '审核状态',
       dataIndex: 'audit',
       width: '10%',
-      render: (_, record: { audit: boolean }) => (
-        <div>{record.audit ? "已审核" : "未审核"}</div>
+      // render: (_, record: { audit: boolean }) => (
+      //   <div>{record.audit ? "已审核" : "未审核"}</div>
+      // ),
+      render: (_, record: { key: React.Key; audit: boolean }) => (
+        <>
+          <div>是否已经审核</div>
+          <Switch
+            checkedChildren="是"
+            unCheckedChildren="否"
+            checked={record.audit}
+            onChange={() => handleAuditChange(record)}
+          />
+        </>
       ),
       sorter: (a: any, b: any) => {
         return a.audit - b.audit;

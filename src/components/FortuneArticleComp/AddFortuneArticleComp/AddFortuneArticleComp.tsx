@@ -20,7 +20,7 @@ import { RcFile, UploadProps } from 'antd/es/upload';
 import styles from './AddFortuneArticleComp.less';
 import './AddFortuneArticleComp.css';
 import { history } from '@umijs/max';
-const [messageApi, contextHolder] = message.useMessage();
+
 
 const yearOptions: { value: string | number, label: string | number }[] = [];
 
@@ -42,7 +42,7 @@ const getBase64 = (file: RcFile): Promise<string> =>
     reader.onerror = (error) => reject(error);
   });
 const MyEditor = () => {
-
+  const [messageApi, contextHolder] = message.useMessage();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   const [previewImage, setPreviewImage] = useState('');
