@@ -65,7 +65,7 @@ const App: React.FC<Props> = (props) => {
       );
       return;
     }
-    params.needUpdate=change;
+    params.needUpdate = change;
 
     request('/admin/secure/updateOrSaveDetailCoupon', {
       params: params,
@@ -186,7 +186,19 @@ const App: React.FC<Props> = (props) => {
         name="startDate"
         rules={[{ required: true, message: '不能为空' }]}
       >
-        <DatePicker showTime />
+        <DatePicker showTime
+          onChange={(value) => {
+            const expireDate = form.getFieldValue('expireDate');
+            console.log(expireDate)
+            // 如果已经手动选择过结束日期，就不自动修改
+            if (expireDate) return;
+
+            if (value) {
+              form.setFieldsValue({
+                expireDate: value.add(1, 'year'),
+              });
+            }
+          }} />
       </Form.Item>
       <Form.Item
         label="结束日期"

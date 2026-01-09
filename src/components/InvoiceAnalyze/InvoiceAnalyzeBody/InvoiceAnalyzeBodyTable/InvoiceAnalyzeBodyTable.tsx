@@ -1,5 +1,5 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import { PaginationProps, Table } from 'antd';
+import React, { Dispatch, SetStateAction, useState } from 'react';
+import { message, Modal, PaginationProps, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import NumToString from '@/utils/NumToString';
 import { formatTimeFromStr } from '@/utils/format';
@@ -7,12 +7,14 @@ import { tableDateType } from '../../InvoiceAnalyze';
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
+import { set } from 'rsuite/esm/internals/utils/date';
+import { request } from '@umijs/max';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
 interface DataType {
-  key: number;
+  key: string;
   invoiceId: string;
   orderDate: string;
   firstName: string;
@@ -45,7 +47,7 @@ const columns: ColumnsType<DataType> = [
     },
   },
   {
-    title: '订单时间(美西时间)',
+    title: '订单生成时间(美西时间)',
     dataIndex: 'orderDate',
     key: 'orderDate',
     render: (orderDate: string) => {
@@ -154,7 +156,7 @@ const columns: ColumnsType<DataType> = [
               backgroundColor: 'rgb(100,200,100)',
             }}
           >
-            已下单
+            支付完成
           </div>
         );
       } else if (status === 'cancelled') {
@@ -177,7 +179,7 @@ const columns: ColumnsType<DataType> = [
             快递已查收
           </div>
         );
-      } 
+      }
       // else if (status === 'userinfoerror' || status === "usernotshow") {
       //   return (
       //     <div style={{ padding: 4, color: 'white', backgroundColor: 'orange' }}>
@@ -196,7 +198,7 @@ const columns: ColumnsType<DataType> = [
     filters: [
       { text: '快递中', value: 'delivery' },
       { text: '快递已查收', value: 'received' },
-      { text: '已下单', value: 'paid' },
+      { text: '支付完成', value: 'paid' },
       { text: '取消支付', value: 'cancelled' },
       { text: '支付确认中', value: 'unpaid' },
     ],
@@ -216,19 +218,21 @@ interface Props {
   setPageSize: Dispatch<SetStateAction<number>>;
   tableData: tableDateType[];
   total: number;
+  active: boolean;
+  refreshPage: () => void;
 }
 const App: React.FC<Props> = (props) => {
-  const { page, pageSize, setPage, setPageSize, total, tableData } = props;
+  const { page, pageSize, setPage, setPageSize, total, tableData, active, refreshPage } = props;
   const data: DataType[] = tableData.map((item, index: number) => {
     return {
-      key: index,
+      key: item.invoiceId,
       invoiceId: item.invoiceId,
       orderDate: dayjs(item.orderDate)
         .tz("America/Los_Angeles") // 自动处理夏令时
         .format("YYYY-MM-DD HH:mm:ss"),
       firstName: item.firstName
         ? item.firstName + ',' + item.lastName
-        : '非登录账号',
+        : item.ip ? item.ip : '非登录账号',
       email: item.email,
       country: item.country,
       province: item.province,
@@ -247,19 +251,80 @@ const App: React.FC<Props> = (props) => {
     setPageSize(pageSize);
     setPage(current);
   };
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: (keys: React.Key[], selectedRows: DataType[]) => {
+      console.log('选中的行：', selectedRows);
+      setSelectedRowKeys(keys);
+    },
+  };
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
-    <Table
-      columns={columns}
-      pagination={{
-        showSizeChanger: true,
-        defaultCurrent: page,
-        defaultPageSize: pageSize,
-        onChange: onShowSizeChange,
-        total: total,
-        pageSizeOptions: [40, 100, 200, 500],
-      }}
-      dataSource={data}
-    />
+    <>
+      <button type='button' style={{ marginRight: 10 }} onClick={() => {
+        setIsModalOpen(true);
+      }}>提取所选订单编号</button>
+      <button type='button' style={{ marginRight: 10 }}
+        disabled={active ? true : false}
+        onClick={() => {
+          if (selectedRowKeys.length === 0) {
+            message.error({ content: "请选择要删除的订单", style: { marginBottom: "40vh" } })
+            return;
+          }
+          request("/admin/secure/deleteInvoice", { method: "POST", data: { selectedRowKeys } })
+            .then(data => {
+              if (data.result) {
+                message.success({ content: "删除成功", style: { marginBottom: "40vh" } })
+                setSelectedRowKeys([]);
+                refreshPage();
+              } else {
+                message.error({ content: "有点小问题，好像没删成功", style: { marginBottom: "40vh" } })
+              }
+            })
+        }}>删除所选订单编号</button>
+
+      <button type='button'
+        disabled={active ? false : true}
+        onClick={() => {
+          if (selectedRowKeys.length === 0) {
+            message.error({ content: "请选择要恢复的订单", style: { marginBottom: "40vh" } })
+            return;
+          }
+          request("/admin/secure/recoveryInvoice", { method: "POST", data: { selectedRowKeys } })
+            .then(data => {
+              if (data.result) {
+                message.success({ content: "恢复成功", style: { marginBottom: "40vh" } })
+                setSelectedRowKeys([]);
+                refreshPage();
+              } else {
+                message.error({ content: "有点小问题，好像没恢复成功", style: { marginBottom: "40vh" } })
+              }
+            })
+        }}
+      >移出回收站</button>
+      <Modal
+        open={isModalOpen}
+        onOk={() => setIsModalOpen(false)}
+        onCancel={() => setIsModalOpen(false)}
+        title="所选订单编号">
+        {selectedRowKeys.map((item) => <span key={item}>{item + ";"}</span>)}
+      </Modal>
+      <Table
+        columns={columns}
+        rowSelection={rowSelection}
+        pagination={{
+          showSizeChanger: true,
+          defaultCurrent: page,
+          defaultPageSize: pageSize,
+          onChange: onShowSizeChange,
+          total: total,
+          pageSizeOptions: [40, 100, 200, 500],
+        }}
+        dataSource={data}
+      />
+    </>
+
   );
 };
 export default App;

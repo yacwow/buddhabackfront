@@ -200,7 +200,17 @@ const App: React.FC<Props> = (props) => {
 
       // 移除空的组
       newList = newList.filter(group => group.length > 0);
-      console.log(newList)
+     
+      //这个代码其实本身不需要的，但是存在一种可能，整个产品由于某种原因所有的图片都没有颜色但是实实在在的上传上去了，
+      //这种情况下，如果没有下面的代码，那么addproduct组件里面的时候，不能通过message.info('必须有一张小图有颜色', 3); 这一行的自测
+      const successFileList = newList.flat().map(item => ({
+        ...item,
+        listPrice: item.listPrice ?? 0   // 如果 listPrice 缺失，则补成 0 或你想要的默认值
+      }));
+      setSuccessFileList(successFileList);
+
+
+
       return [...newList]; // 更新状态并强制重新渲染
     });
 

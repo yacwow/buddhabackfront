@@ -12,13 +12,13 @@ const App: React.FC = () => {
           console.log('in');
           const rows = data.data.currencyRatio.split('&&');
           const newData = rows.map((row: string, index: number) => {
-            const [
+           const [
               minPrice,
               maxPrice,
               coefficient,
-              exchangeRate,
-              purchaseCost,
+              deliveryCost,
               adjustment,
+              additionProfit,
               budgetRangeMin,
               budgetRangeMax,
             ] = row.split(';;');
@@ -28,9 +28,9 @@ const App: React.FC = () => {
               minPrice: parseFloat(minPrice),
               maxPrice: parseFloat(maxPrice),
               coefficient: parseFloat(coefficient),
-              exchangeRate: parseFloat(exchangeRate),
-              purchaseCost: parseFloat(purchaseCost),
+              deliveryCost: parseFloat(deliveryCost),
               adjustment: parseFloat(adjustment),
+              additionProfit: parseFloat(additionProfit),
               budgetRangeMin: parseFloat(budgetRangeMin),
               budgetRangeMax: parseFloat(budgetRangeMax),
             };

@@ -34,9 +34,9 @@ const App: React.FC = () => {
               minPrice,
               maxPrice,
               coefficient,
-              exchangeRate,
-              purchaseCost,
+              deliveryCost,
               adjustment,
+              additionProfit,
               budgetRangeMin,
               budgetRangeMax,
             ] = row.split(';;');
@@ -46,9 +46,9 @@ const App: React.FC = () => {
               minPrice: parseFloat(minPrice),
               maxPrice: parseFloat(maxPrice),
               coefficient: parseFloat(coefficient),
-              exchangeRate: parseFloat(exchangeRate),
-              purchaseCost: parseFloat(purchaseCost),
+              deliveryCost: parseFloat(deliveryCost),
               adjustment: parseFloat(adjustment),
+              additionProfit: parseFloat(additionProfit),
               budgetRangeMin: parseFloat(budgetRangeMin),
               budgetRangeMax: parseFloat(budgetRangeMax),
             };
@@ -70,10 +70,11 @@ const App: React.FC = () => {
       return;
     }
     let i = 0;
+    console.log(truePrice, initialRatio)
     for (; i < initialRatio.length; i++) {
       if (
         truePrice > initialRatio[i].minPrice &&
-        truePrice < initialRatio[i].maxPrice
+        truePrice <= initialRatio[i].maxPrice
       ) {
         break;
       }
@@ -87,10 +88,27 @@ const App: React.FC = () => {
     }
     //按照i的标准进行计算
     let newValueBeforeDiscount =
-      +truePrice * initialRatio[i].coefficient * initialRatio[i].exchangeRate +
-      initialRatio[i].purchaseCost +
+      +truePrice * initialRatio[i].coefficient + initialRatio[i].deliveryCost +
+      initialRatio[i].additionProfit +
       initialRatio[i].adjustment;
-    setValueBeforeDiscount(newValueBeforeDiscount);
+    // 随机选择小数部分结尾
+    const endings = [0.99, 0.98, 0.97, 0.96, 0.95];
+    const randomEnding = endings[Math.floor(Math.random() * endings.length)];
+
+    // 保留整数部分，加上随机小数部分
+    const finalValue = Math.floor(newValueBeforeDiscount) + randomEnding;
+
+    setValueBeforeDiscount("" + finalValue);
+    // finalValue 已经计算好并带随机结尾
+    const minMultiplier = 1.15;
+    const maxMultiplier = 1.4;
+
+    // 随机生成 1.2~1.4 的系数
+    const randomMultiplier = Math.random() * (maxMultiplier - minMultiplier) + minMultiplier;
+
+    // original 价格
+    const originalPrice = +(finalValue * randomMultiplier).toFixed(2); // 保留两位小数
+    setOriginValue("" + originalPrice);
   };
   return (
     <div className={styles.container}>

@@ -32,9 +32,8 @@ const App: React.FC<Props> = (props) => {
         selectValue,
       },
     }).then((data) => {
-      console.log(data);
       if (data.result) {
-        setTotal(1);
+        setTotal(data.data.invoiceData.length);
         setTableData(data.data.invoiceData);
       }
     });
@@ -111,6 +110,7 @@ const App: React.FC<Props> = (props) => {
       <div className={styles.body}>
         <div className={styles.showTable}>{buildRecentTwoDay()}</div>
         <div className={styles.search}>
+          <div>建议用订单编号/邮箱来搜索</div>
           <Select
             value={selectValue}
             style={{ width: 120, height: 32 }}

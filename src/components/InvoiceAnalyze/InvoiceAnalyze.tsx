@@ -16,6 +16,7 @@ export type tableDateType = {
   status: string;
   discountAmount?: number;
   discountPercent?: number;
+  ip?: string;
 };
 const App: React.FC = () => {
   const [tableData, setTableData] = useState<tableDateType[]>([]); //整个table的数据

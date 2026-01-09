@@ -27,6 +27,7 @@ const rangePresets: {
   { label: '最近30天', value: [dayjs().add(-30, 'd'), dayjs()] },
   { label: '最近90天', value: [dayjs().add(-90, 'd'), dayjs()] },
 ];
+
 interface Props {
   options: any;
 }

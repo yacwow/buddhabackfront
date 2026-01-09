@@ -6,6 +6,7 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import InvoiceAnalyzeBodyTable from './InvoiceAnalyzeBodyTable';
 import { request } from '@umijs/max';
 import { tableDateType } from '../InvoiceAnalyze';
+import { set } from 'rsuite/esm/internals/utils/date';
 interface Props {
   tableData: tableDateType[];
   total: number;
@@ -24,6 +25,7 @@ const App: React.FC<Props> = (props) => {
   const [methodStatus, setMethodStatus] = useState('all'); //订单状态
   const [page, setPage] = useState(1); //table显示的页面
   const [pageSize, setPageSize] = useState(40); //显示的一页数量
+  const [active, setActive] = useState(false)//是否显示回收站订单
   const onChange1: DatePickerProps['onChange'] = (date, dateString) => {
     console.log(date, dateString);
     setDate1(date);
@@ -86,7 +88,7 @@ const App: React.FC<Props> = (props) => {
         beforeDate: day2,
         paymentStatus,
         methodStatus,
-        isRecycleInvoice: true,
+        isRecycleInvoice: active,
         page,
         pageSize,
       },
@@ -95,7 +97,7 @@ const App: React.FC<Props> = (props) => {
         setTableData([...data.data.invoiceData]);
       }
     });
-  }, [day1, day2, paymentStatus, methodStatus, page, pageSize]);
+  }, [day1, day2, paymentStatus, methodStatus, page, pageSize, active]);
   useEffect(() => {
     if (day1 && day2 && day1 > day2) {
       //不正常
@@ -107,14 +109,64 @@ const App: React.FC<Props> = (props) => {
         beforeDate: day2,
         paymentStatus,
         methodStatus,
-        isRecycleInvoice: true,
+        isRecycleInvoice: active,
       },
     }).then((data) => {
       if (data.result) {
         setTotal(data.data.count);
       }
     });
-  }, [day1, day2, paymentStatus, methodStatus]);
+  }, [day1, day2, paymentStatus, methodStatus, active]);
+
+
+
+
+
+
+  const refreshPage = () => {
+    if (day1 && day2 && day1 > day2) {
+      //不正常
+      return;
+    }
+    request('/admin/secure/getInvoiceCount', {
+      params: {
+        afterDate: day1,
+        beforeDate: day2,
+        paymentStatus,
+        methodStatus,
+        isRecycleInvoice: active,
+      },
+    }).then((data) => {
+      if (data.result) {
+        setTotal(data.data.count);
+      }
+    });
+    request('/admin/secure/getInvoiceInfo', {
+      params: {
+        afterDate: day1,
+        beforeDate: day2,
+        paymentStatus,
+        methodStatus,
+        isRecycleInvoice: active,
+        page,
+        pageSize,
+      },
+    }).then((data) => {
+      if (data.result) {
+        setTableData([...data.data.invoiceData]);
+      }
+    });
+
+  }
+
+
+
+
+
+
+
+
+
   return (
     <div>
       <div style={{ display: 'flex' }}>
@@ -187,6 +239,7 @@ const App: React.FC<Props> = (props) => {
             style={{
               marginBottom: 20,
             }}
+            onClick={() => setActive(!active)}
           />
           <div style={{ marginTop: 5 }}>回收站订单</div>
         </div>
@@ -201,6 +254,8 @@ const App: React.FC<Props> = (props) => {
             setPageSize={setPageSize}
             tableData={tableData}
             total={total}
+            active={active}
+            refreshPage={refreshPage}
           />
         ) : null}
       </div>

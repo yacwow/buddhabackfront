@@ -277,7 +277,7 @@ const App: React.FC = () => {
       },
     },
     {
-      title: '订单时间',
+      title: '添加到购物车时间',
       dataIndex: 'createTime',
       key: 'createTime',
       render: (createTime: string) => {

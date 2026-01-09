@@ -131,7 +131,9 @@ const App: React.FC = () => {
       setStockStatus('');
     };
   }, []);
-
+  useEffect(() => {
+    console.log(successFileList)
+  },[successFileList])
   //展开提交的modal 在提交之前先做一些简单的验证，省的容易出错
   const showModal = () => {
     // // console.log(bigImgSuccessList, successFileList);
@@ -148,6 +150,7 @@ const App: React.FC = () => {
       message.info('需要有一张大图', 3);
       return;
     }
+    console.log(successFileList)
     if (
       Object.keys(successFileList).length !== 0 &&
       successFileList.every((item) => item.color === '')
